@@ -1,18 +1,18 @@
 import { useState } from "react"
 import ExamplesView from "./ExamplesView"
 import PlaygroundView from "./PlaygroundView"
+import { configs as allConfigs } from './../configs/configs'
 
 export interface ContentProps {
-    heading?: string
+    item: { heading: string, key: string }
 }
 
 export const Content = (props: ContentProps) => {
     const [activeTab, setActiveTab] = useState<'playground' | 'examples'>('playground');
-    const { heading = "Playground & Examples" } = props;
+    const { item } = props;
 
     return (
         <div className="flex-1 flex flex-col p-4">
-            {/* <h1 className="text-xl font-bold text-gray-800 px-4 pb-2 tracking-tight">{heading}</h1> */}
             <div className="flex items-end bg-transparent border-b border-gray-200">
                 <button
                     className={`relative px-6 py-2 rounded-t-lg font-semibold
@@ -38,7 +38,7 @@ export const Content = (props: ContentProps) => {
                 </button>
             </div>
             <div className="flex-1 overflow-auto bg-white rounded-t-lg mt-0">
-                {activeTab === 'playground' ? <PlaygroundView /> : <ExamplesView />}
+                {activeTab === 'playground' ? <PlaygroundView config={item.key as keyof typeof allConfigs} /> : <ExamplesView config={item.key as keyof typeof allConfigs} />}
             </div>
         </div>
     )

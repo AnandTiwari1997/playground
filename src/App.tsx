@@ -4,13 +4,13 @@ import Sidebar from './components/Sidebar'
 
 function App() {
 
-  const items = ["Button", "Input", "Card"];
-  const [active, setActive] = useState<string>(items[0]);
+  const items = [{ heading: "Button", key: "button" }, { heading: "Input", key: "input" }, { heading: "Card", key: "card" }];
+  const [activeItem, setActiveItem] = useState<{ heading: string, key: string }>(items[0]);
 
   return (
     <div className="flex h-screen">
-      <Sidebar items={items} activeItem={active} onItemSelect={setActive} />
-      <Content heading={active} />
+      <Sidebar items={items} activeItem={activeItem} onItemSelect={setActiveItem} />
+      <Content item={activeItem}  />
     </div>
   )
 }

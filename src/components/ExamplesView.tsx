@@ -1,23 +1,16 @@
 import { ComponentCard, ComponentConfig } from "./ComponentCard";
-import { Button, ButtonProps } from '@minimalist/ui'
+import { configs as allConfigs } from './../configs/configs'
 
-const configs: ComponentConfig<ButtonProps>[] = [
-    {
-        title: "Button",
-        canvas: Button as React.ComponentType<ButtonProps>,
-        props: { label: "Click Me", variant: "primary", allowClickEffect: true }
-    },
-      {
-        title: "Button",
-        canvas: Button as React.ComponentType<ButtonProps>,
-        props: { variant: "outline", size: "md" },
-        children: 'Click Me'
-    }
-];
+export interface ExamplesViewProps {
+    config: keyof typeof allConfigs;
+}
 
-const ExamplesView = () => {
+const ExamplesView = (props: ExamplesViewProps) => {
+    const { config } = props;
+    const configs = allConfigs[config].config;
+
     return (
-        <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(550px,1fr))]">
+        <div className="overflow-auto grid gap-6 grid-cols-[repeat(auto-fit,minmax(550px,1fr))]">
             {configs.map((config, idx) => (
                 <ComponentCard key={idx} displayName="Button" data={config} />
             ))}

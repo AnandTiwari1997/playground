@@ -199,7 +199,7 @@ ${indent}<span class="text-sky-500">/&gt;</span>
         <div className="m-2 rounded-xl shadow-md bg-white p-6">
             {/* Title */}
             <h2 className="text-xl mb-2 font-semibold text-gray-800">
-                Component Example
+                {data.title}
             </h2>
 
             {/* Component Preview */}

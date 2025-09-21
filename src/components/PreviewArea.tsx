@@ -1,9 +1,27 @@
-const PreviewArea = () => {
-  return (
-    <div className="border p-4 rounded bg-white">
-      <button className="px-4 py-2 bg-blue-600 text-white rounded">Example Button</button>
-    </div>
-  )
+import React, { useCallback, useEffect, useState } from 'react';
+
+export interface PreviewAreaProps {
+  component: React.ComponentType<any>;
+  metadata: { [key: string]: any };
 }
 
-export default PreviewArea
+export const PreviewArea = ({ component: Component, metadata }: PreviewAreaProps) => {
+
+  const [props, setProps] = useState(metadata);
+
+  useEffect(() => {
+    const initialProps: { [key: string]: any } = {};
+    Object.keys(metadata).forEach((key) => {
+      if (metadata[key] !== undefined) {
+        initialProps[key] = metadata[key];
+      }
+    });
+    setProps(initialProps);
+  }, [metadata]);
+
+  return (
+    <div className=" p-4 rounded bg-white">
+      <Component {...props} />
+    </div>
+  );
+};
