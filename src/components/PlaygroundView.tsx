@@ -20,7 +20,7 @@ const PlaygroundView = (props: PlaygroundViewProps) => {
     useEffect(() => {
         const initialProps: { [key: string]: any } = {};
         Object.keys(metadata).forEach((key) => {
-            if (defaultValue[key as keyof typeof defaultValue]) {
+            if (defaultValue && defaultValue[key as keyof typeof defaultValue]) {
                 initialProps[key] =
                     defaultValue[key as keyof typeof defaultValue];
             } else if (metadata[key].defaultValue) {

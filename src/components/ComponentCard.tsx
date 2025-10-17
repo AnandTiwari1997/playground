@@ -10,6 +10,7 @@ const formatValue = (value: unknown) => {
 };
 
 export interface ComponentConfig<TProps = any> {
+    displayName?: string;
     title: string;
     canvas: React.ComponentType<TProps>;
     props: TProps;
@@ -17,14 +18,13 @@ export interface ComponentConfig<TProps = any> {
 }
 
 export interface ComponentCardProps<T> {
-    displayName: string;
     data: ComponentConfig<T>;
 }
 
 export const ComponentCard = <T extends object>(
     props: ComponentCardProps<T>
 ) => {
-    const { displayName, data } = props;
+    const { data } = props;
     const Component = data.canvas;
 
     const [activeTab, setActiveTab] = useState("props");
@@ -35,7 +35,7 @@ export const ComponentCard = <T extends object>(
     );
     const eventProps = propEntries.filter(([key]) => isEventProp(key));
 
-    const componentName = displayName || "Component";
+    const componentName = data.displayName || "Component";
 
     const highlightJSX = (componentName: any, props: T) => {
         const formattedProps = Object.entries(props)
@@ -186,9 +186,7 @@ ${indent}<span class="text-sky-500">/&gt;</span>
             resolvedChildren = children;
         } else if (Array.isArray(children)) {
             resolvedChildren = children.map((child, index) => (
-                <React.Fragment key={index}>
-                    {renderComponent(child)}
-                </React.Fragment>
+                renderComponent(child)
             ));
         }
 
@@ -235,7 +233,7 @@ ${indent}<span class="text-sky-500">/&gt;</span>
                         <code
                             className="language-jsx"
                             dangerouslySetInnerHTML={{
-                                __html: generateJSX(data, displayName),
+                                __html: generateJSX(data, data.displayName),
                             }}
                         />
                     </pre>
